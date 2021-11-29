@@ -25,7 +25,9 @@ def cronNotify(NotificationType : cronNotification, message):
     elif NotificationType == cronNotification.ERROR:
         print(f"{bcolors.FAIL}[FAIL] {message}{bcolors.ENDC}")
 def buildTime(t : time.struct_time) -> str:
-    return str(t.tm_hour) + ":" + str(t.tm_min) + ":" + str(t.tm_sec)
+    def fixLen(str_to_fix):
+        return str_to_fix if str(str_to_fix).__len__() > 1 else ("0" + str(str_to_fix))
+    return fixLen(str(t.tm_hour)) + ":" + fixLen(str(t.tm_min)) + ":" + fixLen(str(t.tm_sec))
 def mainLoop():
     try:
         config.DEBUG
