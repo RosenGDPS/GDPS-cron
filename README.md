@@ -1,5 +1,5 @@
 # GDPS-cron
-A CRON script for Geometry Dash Private Servers (those running on https://github.com/Cvolton/GMDprivateServer)
+A CRON script for Geometry Dash Private Servers (those running on <a href="https://github.com/Cvolton/GMDprivateServer">CVolton's GMDprivateServer</a>)
 # What is this?
 This is a script that fixes your server's creator points and other weird stuff.
 # How do I set it up?
