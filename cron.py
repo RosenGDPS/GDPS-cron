@@ -1,10 +1,11 @@
 import requests
 import time
 import enum 
-from config import *
+import config
+
 
 def cronOnce():
-    requests.get(GDPS_DB_URL + "tools/cron/cron.php")
+    requests.get(config.GDPS_DB_URL + "tools/cron/cron.php")
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -23,15 +24,32 @@ def cronNotify(NotificationType : cronNotification, message):
         print(f"{bcolors.OKGREEN}[SUCCESS] {message}{bcolors.ENDC}")
     elif NotificationType == cronNotification.ERROR:
         print(f"{bcolors.FAIL}[FAIL] {message}{bcolors.ENDC}")
-
-if __name__ == '__main__':
+def buildTime(t : time.struct_time) -> str:
+    return str(t.tm_hour) + ":" + str(t.tm_min) + ":" + str(t.tm_sec)
+def mainLoop():
+    try:
+        config.DEBUG
+    except AttributeError:
+        config.DEBUG = False
+    if not config.DEBUG:
+            if config.GDPS_DB_URL == "http://exampleGDPS.7m.pl/database/":
+                cronNotify(cronNotification.ERROR, f"Please modify the 'GDPS_DB_URL' variable in the 'config.py' file.")
+                exit()
     while True:
+        
+        
+
+
         try:
+            t = time.localtime(time.time())
             cronOnce()
-            cronNotify(cronNotification.SUCCESS, "Ran a CRON procedure successfully!")
+            cronNotify(cronNotification.SUCCESS, f"{buildTime(t)} => Ran a CRON procedure successfully!")
         except:
-            cronNotify(cronNotification.ERROR, "Failed to run the CRON procedure.")
+            cronNotify(cronNotification.ERROR, f"{buildTime(t)} => Failed to run the CRON procedure.")
         try:
-            time.sleep(3600)
+            time.sleep(config.CRON_SECONDS)
         except KeyboardInterrupt:
             exit()
+
+if __name__ == '__main__':
+    mainLoop()
