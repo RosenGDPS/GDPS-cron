@@ -8,3 +8,5 @@ This is a script that fixes your server's creator points and other weird stuff.
 * `python cron.py` and leave it turned on (I suggest using free hosting like <a href="https://pythonanywhere.com">PythonAnywhere</a>)
 # Do you update this?
 **Every once in a while.** When I find something wrong in the code. You can submit <a href="https://github.com/RosenGDPS/GDPS-cron/issues"> an issue </a> or a <a href="https://github.com/RosenGDPS/GDPS-cron/pulls"> pull request </a> if you want to help me resolve some issue you found.
+# How does it work?
+It hits /database/tools/cron/cron.php every 1 hour (or whatever you set it to), and it logs if it succeeded or not.
